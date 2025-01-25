@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload</title>
+</head>
+<body>
+
+
+<h2>Create product</h2>
+
+<p>
+<label for="name">Enter product name: </label>
+<input type="text" id="name" name="name" placeholder="Name"/>
+</p>
+<p>
+<label for="description">Enter product description: </label>
+<input type="text" id="description" name="description" placeholder="Description"/>
+</p>
+<p>
+<label for="price">Enter product price: </label>
+<input type="text" id="price" name="price" placeholder="Price"/>
+</p>
+<button id="create-button" onclick="createProduct()"> Create </button>
+
+<script>
+    async function createProduct() {
+        var name = document.getElementById("name").value;
+        var description = document.getElementById("description").value;
+        var price = document.getElementById("price").value;
+        let product = {"name": name, "description": description, "price": price};
+        let j_product = JSON.stringify(product)
+
+        await fetch("http://localhost:8080/product", {
+            method: "POST",
+            headers: {
+                      "Accept": "application/json",
+                      "Content-Type": "application/json"
+            },
+            body: j_product
+            })
+            .then(result => result.text())
+            .then(text => alert(text));
+    }
+</script>
+</body>
+</html>
