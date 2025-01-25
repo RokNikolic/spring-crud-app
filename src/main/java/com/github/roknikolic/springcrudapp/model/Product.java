@@ -1,4 +1,4 @@
-package com.github.roknikolic.springcrudapp;
+package com.github.roknikolic.springcrudapp.model;
 
 import jakarta.validation.constraints.NotEmpty;
 
