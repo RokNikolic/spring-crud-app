@@ -1,38 +1,41 @@
 package com.github.roknikolic.springcrudapp.service;
 
 import com.github.roknikolic.springcrudapp.model.Product;
+import com.github.roknikolic.springcrudapp.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class ProductService {
+    @Autowired
+    private ProductRepository productRepository;
 
-    private Map<String, Product> db = new HashMap<>() {{
-        put("1", new Product("1", "name1", "desc", 0.0F));
-    }};
-
-    public Collection<Product> readAll() {
-        return db.values();
+    public Iterable<Product> readAll() {
+        return productRepository.findAll();
     }
 
-    public Product read(String id) {
-        return db.get(id);
+    public Product read(Integer id) {
+        return productRepository.findById(id).orElse(null);
     }
 
-    public Product remove(String id) {
-        return db.remove(id);
+    public void remove(Integer id) {
+        productRepository.deleteById(id);
     }
 
-    public Product create(String id, Product product) {
-        db.put(id, product);
-        return product;
+    public void create(Product product) {
+        productRepository.save(product);
     }
 
-    public Product update(String id, Product product) {
-        db.put(id, product);
-        return product;
+    public Product update(Integer id, Product product) {
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        if (optionalProduct.isPresent()) {
+            product.setId(id);
+            productRepository.save(product);
+            return product;
+        } else {
+            return null;
+        }
     }
 }

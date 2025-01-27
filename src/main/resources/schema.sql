@@ -1,6 +1,8 @@
-create table if not exists product (
-    id bigint identity primary key,
-    name varchar(255),
-    description varchar(255),
-    price varchar(255)
-)
+SET MODE PostgreSQL;
+
+CREATE TABLE IF NOT EXISTS Product (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    price NUMERIC(15, 2) NOT NULL
+);

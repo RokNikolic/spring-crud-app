@@ -21,12 +21,12 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public Collection<Product> read() {
+    public Iterable<Product> readAll() {
         return productService.readAll();
     }
 
     @GetMapping("/product/{id}")
-    public Product read(@PathVariable String id) {
+    public Product read(@PathVariable Integer id) {
         Product product = productService.read(id);
         if (product == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -36,21 +36,22 @@ public class ProductController {
     }
 
     @DeleteMapping("/product/{id}")
-    public void delete(@PathVariable String id) {
-        Product product = productService.remove(id);
-        if (product == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+    public void delete(@PathVariable Integer id) {
+        productService.remove(id);
     }
 
     @PostMapping("/product")
-    public Product create(@RequestBody @Valid Product product) {
-        product.setId(UUID.randomUUID().toString());
-        return productService.create(product.getId(), product);
+    public void create(@RequestBody @Valid Product product) {
+        productService.create(product);
     }
 
     @PutMapping("/product/{id}")
-    public Product update(@PathVariable String id, @RequestBody Product product) {
-        return productService.update(id, product);
+    public Product update(@PathVariable Integer id, @RequestBody Product product) {
+        Product updatedProduct = productService.update(id, product);
+        if (updatedProduct == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        } else {
+            return updatedProduct;
+        }
     }
 }

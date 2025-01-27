@@ -1,28 +1,33 @@
 package com.github.roknikolic.springcrudapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotEmpty;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
+import java.math.BigDecimal;
+
+@Table("PRODUCT")
 public class Product {
-    private String id;
+    @Id @JsonIgnore
+    private Integer id;
     @NotEmpty
     private String name;
-    @NotEmpty
     private String description;
-    private double price;
+    private BigDecimal price;
 
     public Product(){}
-    public Product(String id, String name, String description, double price) {
-        this.id = id;
+    public Product(String name, String description, BigDecimal price) {
         this.name = name;
         this.description = description;
         this.price = price;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -42,11 +47,11 @@ public class Product {
         this.description = description;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 }
