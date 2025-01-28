@@ -45,9 +45,9 @@ public class ProductController {
         productService.create(product);
     }
 
-    @PutMapping("/product/{id}")
-    public Product update(@PathVariable Integer id, @RequestBody Product product) {
-        Product updatedProduct = productService.update(id, product);
+    @PutMapping("/product")
+    public Product update(@RequestBody @Valid Product product) {
+        Product updatedProduct = productService.update(product);
         if (updatedProduct == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {

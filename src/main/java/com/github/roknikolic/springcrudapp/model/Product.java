@@ -1,6 +1,7 @@
 package com.github.roknikolic.springcrudapp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
@@ -9,11 +10,13 @@ import java.math.BigDecimal;
 
 @Table("PRODUCT")
 public class Product {
-    @Id @JsonIgnore
+    @Id
     private Integer id;
     @NotEmpty
     private String name;
+    @NotEmpty
     private String description;
+    @Digits(integer=15, fraction=2)
     private BigDecimal price;
 
     public Product(){}
@@ -21,6 +24,12 @@ public class Product {
         this.name = name;
         this.description = description;
         this.price = price;
+    }
+    public Product(String name, String description, BigDecimal price, Integer id) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.id = id;
     }
 
     public Integer getId() {

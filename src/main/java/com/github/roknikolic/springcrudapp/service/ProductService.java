@@ -25,13 +25,13 @@ public class ProductService {
     }
 
     public void create(Product product) {
+        product.setId(null);
         productRepository.save(product);
     }
 
-    public Product update(Integer id, Product product) {
-        Optional<Product> optionalProduct = productRepository.findById(id);
+    public Product update(Product product) {
+        Optional<Product> optionalProduct = productRepository.findById(product.getId());
         if (optionalProduct.isPresent()) {
-            product.setId(id);
             productRepository.save(product);
             return product;
         } else {
