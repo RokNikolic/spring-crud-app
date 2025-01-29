@@ -1,6 +1,4 @@
-SET MODE PostgreSQL;
-
-CREATE TABLE Product (
+CREATE TABLE IF NOT EXISTS Product (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,

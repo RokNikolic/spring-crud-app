@@ -1,6 +1,5 @@
 package com.github.roknikolic.springcrudapp.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
@@ -8,7 +7,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
 
-@Table("PRODUCT")
+@Table(name = "product")
 public class Product {
     @Id
     private Integer id;
