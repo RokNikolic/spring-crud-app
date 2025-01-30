@@ -16,9 +16,9 @@ public class ProductController {
         return "Welcome to Product api";
     }
 
-    @GetMapping("/products")
-    public Iterable<Product> readAll() {
-        return productService.readAll();
+    @GetMapping("/product")
+    public Iterable<Product> read() {
+        return productService.read();
     }
 
     @GetMapping("/product/{id}")
@@ -32,17 +32,22 @@ public class ProductController {
     }
 
     @DeleteMapping("/product/{id}")
-    public void delete(@PathVariable Integer id) {
-        productService.remove(id);
+    public Product delete(@PathVariable Integer id) {
+        Product deletedProduct = productService.remove(id);
+        if (deletedProduct == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        } else {
+            return deletedProduct;
+        }
     }
 
     @PostMapping("/product")
     public Product create(@RequestBody @Valid Product product) {
         Product createdProduct = productService.create(product);
         if (createdProduct == null) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         } else {
-            return product;
+            return createdProduct;
         }
     }
 
