@@ -122,6 +122,4 @@ class ProductServiceTest {
         Product updatedProduct = productService.update(newProduct);
         assertNull(updatedProduct);
     }
-
-
 }
