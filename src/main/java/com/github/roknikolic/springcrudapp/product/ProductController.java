@@ -1,7 +1,5 @@
-package com.github.roknikolic.springcrudapp.web;
+package com.github.roknikolic.springcrudapp.product;
 
-import com.github.roknikolic.springcrudapp.model.Product;
-import com.github.roknikolic.springcrudapp.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,8 +37,13 @@ public class ProductController {
     }
 
     @PostMapping("/product")
-    public void create(@RequestBody @Valid Product product) {
-        productService.create(product);
+    public Product create(@RequestBody @Valid Product product) {
+        Product createdProduct = productService.create(product);
+        if (createdProduct == null) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            return product;
+        }
     }
 
     @PutMapping("/product")

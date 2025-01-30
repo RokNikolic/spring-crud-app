@@ -1,7 +1,5 @@
-package com.github.roknikolic.springcrudapp.service;
+package com.github.roknikolic.springcrudapp.product;
 
-import com.github.roknikolic.springcrudapp.model.Product;
-import com.github.roknikolic.springcrudapp.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +22,9 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public void create(Product product) {
+    public Product create(Product product) {
         product.setId(null);
-        productRepository.save(product);
+        return productRepository.save(product);
     }
 
     public Product update(Product product) {
