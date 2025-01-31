@@ -16,7 +16,7 @@ public class ProductController {
 
     @GetMapping("/")
     public String welcome() {
-        return "Welcome to Product api";
+        return "Welcome to Product api, please navigate to: http://localhost:8080/swagger-ui/index.html";
     }
 
     @GetMapping("/product")

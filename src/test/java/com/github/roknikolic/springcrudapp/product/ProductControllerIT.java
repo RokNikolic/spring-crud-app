@@ -34,7 +34,6 @@ class ProductControllerIT {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Welcome to Product api")));
-
     }
 
     @Test
@@ -90,6 +89,16 @@ class ProductControllerIT {
     }
 
     @Test
+    public void deleteProductByIdNotFound() throws Exception {
+        mockMvc.perform(post("/product")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\": \"n1\", \"description\": \"d1\", \"price\": \"1.1\"}"));
+
+        mockMvc.perform(delete("/product/{2}", 2))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
     public void createProductById() throws Exception {
         mockMvc.perform(post("/product")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -115,6 +124,18 @@ class ProductControllerIT {
                 .andExpect(jsonPath("$.description").value("d1"))
                 .andExpect(jsonPath("$.price").value(new BigDecimal("1.1")))
                 .andExpect(jsonPath("$.id").value(1));
+    }
+
+    @Test
+    public void updateProductByIdNotFound() throws Exception {
+        mockMvc.perform(post("/product")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\": \"n1\", \"description\": \"d1\", \"price\": \"1.1\"}"));
+
+        mockMvc.perform(put("/product")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"name\": \"n1\", \"description\": \"d1\", \"price\": \"1.1\", \"id\":\"2\"}"))
+                .andExpect(status().isNotFound());
     }
 
 }
