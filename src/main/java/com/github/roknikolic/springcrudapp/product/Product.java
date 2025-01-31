@@ -9,21 +9,28 @@ import java.math.BigDecimal;
 
 @Table(name = "product")
 public class Product {
+    // The Product model class
+
     @Id
     private Integer id;
+
     @NotEmpty
     private String name;
+
     @NotEmpty
     private String description;
+
     @Digits(integer=15, fraction=2)
     private BigDecimal price;
 
     public Product(){}
+
     public Product(String name, String description, BigDecimal price) {
         this.name = name;
         this.description = description;
         this.price = price;
     }
+
     public Product(String name, String description, BigDecimal price, Integer id) {
         this.name = name;
         this.description = description;

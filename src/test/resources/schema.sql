@@ -1,3 +1,5 @@
+-- Schema to auto generate the table for the in memory H2 database, using the PostgreSQL dialect
+
 SET MODE PostgreSQL;
 
 CREATE TABLE IF NOT EXISTS "product" (

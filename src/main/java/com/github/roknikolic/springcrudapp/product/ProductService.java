@@ -1,14 +1,17 @@
 package com.github.roknikolic.springcrudapp.product;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class ProductService {
-    @Autowired
-    private ProductRepository productRepository;
+    // The Product service class for the business logic
+
+    private final ProductRepository productRepository;
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     public Iterable<Product> read() {
         return productRepository.findAll();
@@ -32,7 +35,7 @@ public class ProductService {
         if ((product.getName() == null) ||  (product.getDescription() == null) || (product.getPrice() == null)) {
             return null;
         }
-        product.setId(null); // We force auto generated IDs
+        product.setId(null); // We force auto generated IDs by the database
         return productRepository.save(product);
     }
 
@@ -45,8 +48,7 @@ public class ProductService {
         }
         Optional<Product> optionalProduct = productRepository.findById(product.getId());
         if (optionalProduct.isPresent()) {
-            productRepository.save(product);
-            return product;
+            return productRepository.save(product);
         } else {
             return null;
         }

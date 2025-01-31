@@ -1,15 +1,18 @@
 package com.github.roknikolic.springcrudapp.product;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 public class ProductController {
-    @Autowired
-    private ProductService productService;
+    // The Product controller class for the api end points
+
+    private final ProductService productService;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @GetMapping("/")
     public String welcome() {

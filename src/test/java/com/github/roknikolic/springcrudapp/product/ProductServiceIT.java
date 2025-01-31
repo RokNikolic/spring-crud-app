@@ -17,7 +17,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-class ProductServiceTest {
+class ProductServiceIT {
+    // Integration tests for the product service, using an in memory H2 db.
+
     @Autowired
     private ProductService productService;
 
@@ -40,17 +42,16 @@ class ProductServiceTest {
         productService.create(product);
 
         Product foundProduct = productService.read(1);
-        assertNotNull(product);
+        assertNotNull(foundProduct);
         assertEquals("name1", foundProduct.getName());
     }
+
     @Test
     public void readProductByIdNotFound() {
-        Product product1 = new Product("name1", "description1", new BigDecimal("1.1"));
-        productService.create(product1);
-
         Product product = productService.read(3);
         assertNull(product);
     }
+
     @Test
     public void saveProductNoID() {
         Product product = new Product("name1", "description1", new BigDecimal("1.1"));
@@ -59,6 +60,7 @@ class ProductServiceTest {
         Assertions.assertNotNull(savedProduct);
         assertEquals(1, (int) savedProduct.getId());
     }
+
     @Test
     public void saveProductWithID() {
         Product product = new Product("name1", "description1", new BigDecimal("1.1"), 3);
@@ -67,6 +69,7 @@ class ProductServiceTest {
         Assertions.assertNotNull(savedProduct);
         assertEquals(1, savedProduct.getId());
     }
+
     @Test
     public void saveEmptyProduct() {
         Product product = new Product();
@@ -74,6 +77,7 @@ class ProductServiceTest {
 
         Assertions.assertNull(savedProduct);
     }
+
     @Test
     public void removeProductById_Found() {
         Product product = new Product("name1", "description1", new BigDecimal("1.1"));
@@ -83,6 +87,7 @@ class ProductServiceTest {
         assertNotNull(deletedProduct);
         assertEquals("name1", deletedProduct.getName());
     }
+
     @Test
     public void removeProductById_NotFound() {
         Product product = new Product("name1", "description1", new BigDecimal("1.1"));
@@ -91,6 +96,7 @@ class ProductServiceTest {
         Product deletedProduct = productService.remove(2);
         assertNull(deletedProduct);
     }
+
     @Test
     public void updateProductById_Found() {
         Product product = new Product("name1", "description1", new BigDecimal("1.1"));
@@ -102,6 +108,7 @@ class ProductServiceTest {
         assertNotNull(updatedProduct);
         assertEquals("newName", updatedProduct.getName());
     }
+
     @Test
     public void updateProductById_NotFound() {
         Product product = new Product("name1", "description1", new BigDecimal("1.1"));
@@ -112,6 +119,7 @@ class ProductServiceTest {
         Product updatedProduct = productService.update(newProduct);
         assertNull(updatedProduct);
     }
+
     @Test
     public void updateWithEmptyProduct() {
         Product product = new Product("name1", "description1", new BigDecimal("1.1"));
